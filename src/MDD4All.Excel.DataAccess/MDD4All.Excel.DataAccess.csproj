@@ -2,6 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>MDD4All.de</Authors>
+    <Description>Simple data access for Excel data</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>Excel DataAccess</PackageTags>
+    <Copyright>(c) MDD4All.de</Copyright>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>MDD4All_Github.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>

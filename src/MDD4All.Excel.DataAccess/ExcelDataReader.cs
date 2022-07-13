@@ -114,6 +114,8 @@ namespace MDD4All.Excel.DataAccess
             {
                 string name = sheet.Name;
 
+                Debug.WriteLine(name);
+
                 if(!_sheetDictionary.ContainsKey(name))
                 {
                     Worksheet theWorksheet = ((WorksheetPart)_workbookPart.GetPartById(sheet.Id)).Worksheet;

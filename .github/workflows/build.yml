@@ -1,6 +1,7 @@
 name: Nuget Package Build
 
 on:
+  workflow_dispatch:
   push:
     branches: [ main ]
   pull_request:
@@ -14,22 +15,20 @@ jobs:
       PROJECT_NAME: MDD4All.Excel.DataAccess
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v7
     - name: Setup .NET
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v6
       with:
-        dotnet-version: 5.0.x
+        dotnet-version: 10.0.x
 
     - name: Get version form file
-      uses: pCYSl5EDgo/cat@master
+      run: echo "FILE_VERSION_OUT=$(cat src/version.txt)" >> $GITHUB_OUTPUT
       id: fileVersion
-      with: 
-        path: src/version.txt
 
     - name: Set version as environment variable
       run: echo "VERSION=$(echo $FILE_VERSION.$GITHUB_RUN_NUMBER)" >> $GITHUB_ENV
       env:
-        FILE_VERSION: ${{steps.fileVersion.outputs.text}}
+        FILE_VERSION: ${{steps.fileVersion.outputs.FILE_VERSION_OUT}}
 
     - name: Echo version number
       run: echo $VERSION
@@ -44,7 +43,7 @@ jobs:
       run: dotnet pack --configuration Release /p:Version=${VERSION} --no-build --output ./Output ./src/${PROJECT_NAME}/${PROJECT_NAME}.csproj
 
     - name: Upload artifact(s)
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v7
       with:
         name: ${{env.PROJECT_NAME}}.${{env.VERSION}}
         path: ./Output/*.nupkg
